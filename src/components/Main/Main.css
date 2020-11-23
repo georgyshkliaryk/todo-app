@@ -1,0 +1,15 @@
+.main {
+    font-size: 25px;
+    min-height: 80vh;
+    margin: auto;
+    padding: 3rem;
+    display: flex;
+    justify-content: space-around;
+}
+
+.card {
+    font-size: 15px;
+}
+.card-action:hover {
+    cursor: pointer;
+}

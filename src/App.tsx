@@ -1,10 +1,15 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import "./App.css";
+import Footer from "./components/Footer/Footer";
+import { Main } from "./components/Main/Main";
+import Nav from "./components/Nav/Header";
 
 function App() {
   return (
     <div className="App">
-      hello world! 123
+      <Nav />
+      <Main />
+      <Footer />
     </div>
   );
 }
