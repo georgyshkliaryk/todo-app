@@ -6,10 +6,3 @@
     display: flex;
     justify-content: space-around;
 }
-
-.card {
-    font-size: 15px;
-}
-.card-action:hover {
-    cursor: pointer;
-}
