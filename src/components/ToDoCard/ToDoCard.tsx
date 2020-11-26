@@ -21,7 +21,7 @@ export class ToDoCard extends Component<any, {}> {
                 </p> 
               </div>
               <div className="card-action">
-                <a>Completed</a>
+                <a>Completed</a> 
               </div>
             </div>
           </div>

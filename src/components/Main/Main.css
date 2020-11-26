@@ -1,4 +1,6 @@
-.main {
+
+
+.main__tasks {
     font-size: 25px;
     min-height: 80vh;
     margin: auto;
@@ -6,3 +8,8 @@
     display: flex;
     justify-content: space-around;
 }
+
+#addTask:focus {
+    border-color: purple;
+}
+ 
