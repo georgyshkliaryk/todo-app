@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { ToDoCard } from "../ToDoCard/ToDoCard";
 import { Cards } from "../Cards/Cards";
 
 import "./Main.css";
@@ -18,6 +17,12 @@ export class Main extends Component<any, {}> {
     this.handleChange = this.handleChange.bind(this); 
     this.AddTask = this.AddTask.bind(this);
     this.updateData = this.updateData.bind(this);
+    this.updateData2 = this.updateData2.bind(this);
+    this.updateData3 = this.updateData3.bind(this);
+    localStorage.setItem("tasks", "1")
+
+
+
   }
  
   async updateData(value: number) {
@@ -28,6 +33,18 @@ export class Main extends Component<any, {}> {
     this.state.tasks.splice(this.state.index, 1);
     this.forceUpdate();     
  }
+
+ async updateData2(value: number) {
+  await this.setState({ index: value });
+  this.state.tasks.splice(this.state.index, 1);
+  this.forceUpdate();     
+}
+
+async updateData3(value: number) {
+  await this.setState({ index: value });
+  this.state.doneTasks.splice(this.state.index, 1);
+  this.forceUpdate();     
+}
 
   handleChange(e: any) {
     this.setState({
@@ -53,7 +70,7 @@ export class Main extends Component<any, {}> {
         <div className="main__tasks">
           <div className="main__todo">
             Tasks to do:
-            <Cards text={this.state.tasks} updateData={this.updateData}/>
+            <Cards text={this.state.tasks} updateData={this.updateData} updateData2={this.updateData2} btn={"mark as completed"} btn2={"remove task"}/>
             <form>
               <div className="input-field col s6">
                 <input
@@ -75,7 +92,7 @@ export class Main extends Component<any, {}> {
           </div>
           <div className="main__finished">
             Completed tasks:
-            <DoneCards text={this.state.doneTasks}/>
+            <DoneCards text={this.state.doneTasks} btn={"done"} updateData3={this.updateData3}/>
           </div>
         </div>
       </div>

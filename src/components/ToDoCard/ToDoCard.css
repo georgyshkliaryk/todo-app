@@ -5,3 +5,7 @@
 .card-action:hover {
     cursor: pointer;
 }
+.card-action {
+    display: flex;
+    justify-content: space-around;
+}
