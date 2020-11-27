@@ -12,4 +12,10 @@
 #addTask:focus {
     border-color: purple;
 }
+#addTask {
+    width: 20rem;
+}
+.main__todo, .main__finished {
+    min-width: 35rem;
+}
  

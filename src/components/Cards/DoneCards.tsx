@@ -1,17 +1,12 @@
 import React from "react";
 import { ToDoCard } from "../ToDoCard/ToDoCard";
 
-export class Cards extends React.Component<any, {}> {
-    state = {
-        index: 0
-    }
+export class DoneCards extends React.Component<any, {}> {
   constructor(props: any) {
     super(props);
-    
-  }
+}
 
-
-  render() { 
+render() { 
     let cards = []; 
     if (this.props.text === undefined) {
       cards = [];
