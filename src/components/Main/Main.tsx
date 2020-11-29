@@ -48,7 +48,7 @@ export class Main extends Component<any, {}> {
       doneTasks: JSON.parse(localStorage.getItem("doneTasks") || "[]"),
       inputValue: "",
       index: 0,
-      checked: JSON.parse(localStorage.getItem("checked") || ""),
+      checked: JSON.parse(localStorage.getItem("checked") || "false"),
       themeMain: {
         backgroundColor: "white",
       } as React.CSSProperties,
@@ -64,7 +64,7 @@ export class Main extends Component<any, {}> {
   async componentDidMount() { 
     if (this.state.checked) {
       this.setState({ 
-        checked: JSON.parse(localStorage.getItem("checked") || ""), 
+        checked: JSON.parse(localStorage.getItem("checked") || "false"), 
         themeMain: {
           backgroundColor: "#121212",
         },
