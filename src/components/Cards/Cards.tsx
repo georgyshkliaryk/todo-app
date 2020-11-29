@@ -1,13 +1,14 @@
 import React from "react";
 import { ToDoCard } from "../ToDoCard/ToDoCard";
 
+export default interface IIndexState {
+  index: number
+}
+
 export class Cards extends React.Component<any, {}> {
-  state = {
+  state: IIndexState = {
     index: 0,
-  };
-  constructor(props: any) {
-    super(props);
-  }
+  }; 
 
   render() {
     let cards = [];
@@ -20,9 +21,9 @@ export class Cards extends React.Component<any, {}> {
             key={i}
             text={this.props.text[i]}
             index={i}
-            updateData={this.props.updateData}
-            updateData2={this.props.updateData2}
-            updateData3={this.props.updateData3}
+            markAsCompleted={this.props.markAsCompleted}
+            deleteToDo={this.props.deleteToDo}
+            deleteDone={this.props.deleteDone}
             btn={this.props.btn}
             btn2={this.props.btn2}
           />

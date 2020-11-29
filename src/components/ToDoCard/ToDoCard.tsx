@@ -1,29 +1,31 @@
 import React, { Component } from "react";
 
 import "./ToDoCard.css";
+import IIndexState from "../Cards/Cards";
+
 
 export class ToDoCard extends Component<any, {}> {
-  state = {
+  state: IIndexState = {
     index: 0,
   };
   constructor(props: any) {
     super(props);
-    this.handleClickBtn1 = this.handleClickBtn1.bind(this);
-    this.handleClickBtn2 = this.handleClickBtn2.bind(this); 
-    this.handleClickBtn3 = this.handleClickBtn3.bind(this);
+    this.handleClickMarkAsCompleted = this.handleClickMarkAsCompleted.bind(this);
+    this.handleClickBtnDeleteToDo = this.handleClickBtnDeleteToDo.bind(this); 
+    this.handleClickDeleteDone = this.handleClickDeleteDone.bind(this);
 
     this.state = {
       index: this.props.index,
     };
   }
-  async handleClickBtn1() {
-    await this.props.updateData(this.state.index);
+  async handleClickMarkAsCompleted() {
+    await this.props.markAsCompleted(this.state.index);
   }
-  async handleClickBtn2() {
-    await this.props.updateData2(this.state.index);
+  async handleClickBtnDeleteToDo() {
+    await this.props.deleteToDo(this.state.index);
   }
-  async handleClickBtn3() {
-    await this.props.updateData3(this.state.index);
+  async handleClickDeleteDone() {
+    await this.props.deleteDone(this.state.index);
   }
 
   render() {
@@ -38,11 +40,11 @@ export class ToDoCard extends Component<any, {}> {
               <div className="card-action">
                 <a
                   className="blue-text text-darken-2"
-                  onClick={this.handleClickBtn1}
+                  onClick={this.handleClickMarkAsCompleted}
                 >
                   {this.props.btn}
                 </a>
-                <a className="brn__delete" onClick={this.handleClickBtn2}>
+                <a className="btn__delete" onClick={this.handleClickBtnDeleteToDo}>
                   {this.props.btn2}
                 </a>
               </div>
@@ -53,7 +55,7 @@ export class ToDoCard extends Component<any, {}> {
     } else {
       return (
         <div className="col  s12 m7">
-          <div className="card horizontal">
+          <div className="card horizontal"> 
             <div className="card-stacked">
               <div className="card-content">
                 <p>{this.props.text}</p>
@@ -61,7 +63,7 @@ export class ToDoCard extends Component<any, {}> {
               <div className="card-action">
                 <a
                   className="green-text text-lighten-2"
-                  onClick={this.handleClickBtn3}
+                  onClick={this.handleClickDeleteDone}
                 >
                   {this.props.btn}
                 </a>

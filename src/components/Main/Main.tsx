@@ -4,32 +4,39 @@ import { Cards } from "../Cards/Cards";
 import "./Main.css";
 import { DoneCards } from "../Cards/DoneCards";
 
+interface IMainState {
+  tasks: string[],
+  doneTasks: string[],
+  inputValue: string,
+  index: number
+}
+
 export class Main extends Component<any, {}> {
-  state = {
+  state: IMainState = {
     tasks: [],
     doneTasks: [],
-    inputValue: "",
+    inputValue: "", 
     index: 0,
   };
-
+ 
   constructor(props: any) {
     super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.AddTask = this.AddTask.bind(this);
-    this.updateData = this.updateData.bind(this);
-    this.updateData2 = this.updateData2.bind(this);
-    this.updateData3 = this.updateData3.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleAddTask = this.handleAddTask.bind(this);
+    this.markAsCompleted = this.markAsCompleted.bind(this);
+    this.deleteToDo = this.deleteToDo.bind(this);
+    this.deleteDone = this.deleteDone.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
 
     this.state = {
       tasks: JSON.parse(localStorage.getItem("tasks") || "[]"),
       doneTasks: JSON.parse(localStorage.getItem("doneTasks") || "[]"),
       inputValue: "",
-      index: 0,
+      index: 0, 
     };
   }
 
-  async updateData(value: number) {
+  async markAsCompleted(value: number) {
     await this.setState({ index: value });
     this.setState({
       doneTasks: [...this.state.doneTasks, this.state.tasks[this.state.index]],
@@ -40,38 +47,38 @@ export class Main extends Component<any, {}> {
     this.forceUpdate();
   }
 
-  async updateData2(value: number) {
+  async deleteToDo(value: number) {
     await this.setState({ index: value });
     this.state.tasks.splice(this.state.index, 1);
     localStorage.setItem("tasks", JSON.stringify(this.state.tasks));
     this.forceUpdate();
   }
 
-  async updateData3(value: number) {
+  async deleteDone(value: number) {
     await this.setState({ index: value });
     this.state.doneTasks.splice(this.state.index, 1);
     localStorage.setItem("doneTasks", JSON.stringify(this.state.doneTasks));
     this.forceUpdate();
   }
 
-  handleChange(e: any) {
+  handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     this.setState({
       inputValue: e.target.value,
     });
   }
 
-  async AddTask() {
+  async handleAddTask() {
     if (this.state.inputValue !== "") {
       await this.setState({
         tasks: [...this.state.tasks, this.state.inputValue],
       });
       localStorage.setItem("tasks", JSON.stringify(this.state.tasks));
     }
-
     this.setState({
       inputValue: "",
     });
   }
+
   async handleKeyDown(e: any) {
     if (e.key === "Enter") {
       if (this.state.inputValue !== "") {
@@ -80,7 +87,6 @@ export class Main extends Component<any, {}> {
         });
         localStorage.setItem("tasks", JSON.stringify(this.state.tasks));
       }
-
       this.setState({
         inputValue: "",
       });
@@ -95,8 +101,8 @@ export class Main extends Component<any, {}> {
             Tasks to do:
             <Cards
               text={this.state.tasks}
-              updateData={this.updateData}
-              updateData2={this.updateData2}
+              markAsCompleted={this.markAsCompleted}
+              deleteToDo={this.deleteToDo}
               btn={"mark as completed"}
               btn2={"remove task"}
             />
@@ -108,7 +114,7 @@ export class Main extends Component<any, {}> {
                   type="text"
                   className="validate"
                   value={this.state.inputValue}
-                  onChange={this.handleChange}
+                  onChange={this.handleInputChange}
                   onKeyDown={this.handleKeyDown}
                 />{" "}
                 <br />
@@ -116,18 +122,17 @@ export class Main extends Component<any, {}> {
                   type="button"
                   value={"Add new task"}
                   className="waves-effect waves-light btn #b39ddb deep-purple lighten-3"
-                  onClick={this.AddTask}
-                  
+                  onClick={this.handleAddTask}
                 />
               </div>
             </form>
           </div>
-          <div className="main__finished">
+          <div className="main__finished"> 
             Completed tasks:
             <DoneCards
               text={this.state.doneTasks}
               btn={"done"}
-              updateData3={this.updateData3}
+              deleteDone={this.deleteDone}
             />
           </div>
         </div>

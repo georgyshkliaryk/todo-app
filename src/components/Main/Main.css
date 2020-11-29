@@ -6,6 +6,7 @@
     margin: auto;
     padding: 3rem;
     display: flex;
+    flex-wrap: nowrap;
     justify-content: space-around;
 }
 
