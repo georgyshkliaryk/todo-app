@@ -15,6 +15,7 @@ export class DoneCards extends React.Component<any, {}> {
             index={i}
             deleteDone={this.props.deleteDone}
             btn={this.props.btn}
+            styleCard={this.props.styleCard}
           />
         );
       }

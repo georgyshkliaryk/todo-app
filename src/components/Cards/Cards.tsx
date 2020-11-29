@@ -26,6 +26,7 @@ export class Cards extends React.Component<any, {}> {
             deleteDone={this.props.deleteDone}
             btn={this.props.btn}
             btn2={this.props.btn2}
+            styleCard={this.props.styleCard}
           />
         );
       }

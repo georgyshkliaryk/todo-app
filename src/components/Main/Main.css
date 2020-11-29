@@ -1,14 +1,17 @@
-
-
 .main__tasks {
     font-size: 25px;
     min-height: 80vh;
     margin: auto;
     padding: 3rem;
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     justify-content: space-around;
 }
+
+/* .main__todo, .main__finished {
+    color:white;
+}  */
+
 
 #addTask:focus {
     border-color: purple;
@@ -16,7 +19,31 @@
 #addTask {
     width: 20rem;
 }
+
+.switch.red1 label .lever {
+   background-color: grey;
+}
+.switch.red1 label input[type=checkbox]:checked+.lever {
+   background-color: #b39ddb;
+}
+.switch.red1 label input[type=checkbox]:checked+.lever:after {
+   background-color: #b39ddb;
+}
 .main__todo, .main__finished {
     min-width: 35rem;
+}
+
+.switch {
+    padding-top: 1rem;
+}
+.switch label {
+    font-size: 20px;
+}
+
+
+@media (max-width: 35rem) {
+    .main__todo, .main__finished {
+        min-width: 0;
+    }
 }
  

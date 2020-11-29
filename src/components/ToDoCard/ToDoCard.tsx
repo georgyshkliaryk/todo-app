@@ -32,7 +32,7 @@ export class ToDoCard extends Component<any, {}> {
     if (this.props.btn === "mark as completed") {
       return (
         <div className="col  s12 m7">
-          <div className="card horizontal">
+          <div className="card horizontal" style={this.props.styleCard}>
             <div className="card-stacked">
               <div className="card-content">
                 <p>{this.props.text}</p>
@@ -55,7 +55,7 @@ export class ToDoCard extends Component<any, {}> {
     } else {
       return (
         <div className="col  s12 m7">
-          <div className="card horizontal"> 
+          <div className="card horizontal" style={this.props.styleCard}> 
             <div className="card-stacked">
               <div className="card-content">
                 <p>{this.props.text}</p>

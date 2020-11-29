@@ -1,6 +1,7 @@
 .card {
     font-size: 15px;
     width: 35rem;
+    background-color: #242424;
 }
 .card-action:hover {
     cursor: pointer;
@@ -8,4 +9,10 @@
 .card-action {
     display: flex;
     justify-content: space-around;
+}
+
+@media (max-width: 35rem) {
+    .card {
+        width: 25rem;
+    }
 }

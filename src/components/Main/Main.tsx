@@ -5,10 +5,14 @@ import "./Main.css";
 import { DoneCards } from "../Cards/DoneCards";
 
 interface IMainState {
-  tasks: string[],
-  doneTasks: string[],
-  inputValue: string,
-  index: number
+  tasks: string[];
+  doneTasks: string[];
+  inputValue: string;
+  index: number;
+  checked: boolean;
+  themeMain: React.CSSProperties;
+  themeTitle: React.CSSProperties;
+  themeCard: React.CSSProperties;
 }
 
 export class Main extends Component<any, {}> {
@@ -17,8 +21,18 @@ export class Main extends Component<any, {}> {
     doneTasks: [],
     inputValue: "", 
     index: 0,
+    checked: false,
+    themeMain: {
+      backgroundColor: "black",
+    } as React.CSSProperties,
+    themeTitle: {
+      color: "black",
+    } as React.CSSProperties, 
+    themeCard: {
+      backgroundColor: "white",
+    } as React.CSSProperties,
   };
- 
+
   constructor(props: any) {
     super(props);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -27,13 +41,41 @@ export class Main extends Component<any, {}> {
     this.deleteToDo = this.deleteToDo.bind(this);
     this.deleteDone = this.deleteDone.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleThemeChange = this.handleThemeChange.bind(this);
 
     this.state = {
       tasks: JSON.parse(localStorage.getItem("tasks") || "[]"),
       doneTasks: JSON.parse(localStorage.getItem("doneTasks") || "[]"),
       inputValue: "",
-      index: 0, 
+      index: 0,
+      checked: JSON.parse(localStorage.getItem("checked") || ""),
+      themeMain: {
+        backgroundColor: "white",
+      } as React.CSSProperties,
+      themeTitle: {
+        color: "black",
+      } as React.CSSProperties,
+      themeCard: {
+        backgroundColor: "white",
+      } as React.CSSProperties,
     };
+  }
+
+  async componentDidMount() { 
+    if (this.state.checked) {
+      this.setState({ 
+        checked: JSON.parse(localStorage.getItem("checked") || ""), 
+        themeMain: {
+          backgroundColor: "#121212",
+        },
+        themeTitle: {
+          color: "white",
+        },
+        themeCard: {
+          backgroundColor: "#242424",
+        },
+      });
+    }
   }
 
   async markAsCompleted(value: number) {
@@ -79,7 +121,7 @@ export class Main extends Component<any, {}> {
     });
   }
 
-  async handleKeyDown(e: any) {
+  async handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === "Enter") {
       if (this.state.inputValue !== "") {
         await this.setState({
@@ -93,11 +135,51 @@ export class Main extends Component<any, {}> {
     }
   }
 
+  async handleThemeChange(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.checked) {
+      
+      await this.setState({
+        checked: true,
+        themeMain: {
+          backgroundColor: "#121212",
+        },
+        themeTitle: {
+          color: "white",
+        },
+        themeCard: {
+          backgroundColor: "#242424",
+        },
+      });
+    } else {
+      await this.setState({
+        checked: false,
+        themeMain: {
+          backgroundColor: "white",
+        },
+        themeTitle: {
+          color: "black",
+        },
+        themeCard: {
+          backgroundColor: "white",
+        },
+      });   
+    }
+    localStorage.setItem("checked", JSON.stringify(this.state.checked));
+  }
+
   render() {
     return (
-      <div className="main">
+      <div className="main" style={this.state.themeMain}>
+        <div className="switch red1">
+          <label>
+            Light
+            <input type="checkbox" onChange={this.handleThemeChange} checked={this.state.checked}/>
+            <span className="lever"></span>
+            Dark
+          </label>
+        </div>
         <div className="main__tasks">
-          <div className="main__todo">
+          <div className="main__todo" style={this.state.themeTitle}>
             Tasks to do:
             <Cards
               text={this.state.tasks}
@@ -105,6 +187,7 @@ export class Main extends Component<any, {}> {
               deleteToDo={this.deleteToDo}
               btn={"mark as completed"}
               btn2={"remove task"}
+              styleCard={this.state.themeCard}
             />
             <form>
               <div className="input-field col s6">
@@ -127,12 +210,13 @@ export class Main extends Component<any, {}> {
               </div>
             </form>
           </div>
-          <div className="main__finished"> 
+          <div className="main__finished" style={this.state.themeTitle}>
             Completed tasks:
             <DoneCards
               text={this.state.doneTasks}
               btn={"done"}
               deleteDone={this.deleteDone}
+              styleCard={this.state.themeCard}
             />
           </div>
         </div>
