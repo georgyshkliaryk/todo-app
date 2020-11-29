@@ -14,37 +14,45 @@ export class Main extends Component<any, {}> {
 
   constructor(props: any) {
     super(props);
-    this.handleChange = this.handleChange.bind(this); 
+    this.handleChange = this.handleChange.bind(this);
     this.AddTask = this.AddTask.bind(this);
     this.updateData = this.updateData.bind(this);
     this.updateData2 = this.updateData2.bind(this);
     this.updateData3 = this.updateData3.bind(this);
-    localStorage.setItem("tasks", "1")
+    this.handleKeyDown = this.handleKeyDown.bind(this);
 
-
-
+    this.state = {
+      tasks: JSON.parse(localStorage.getItem("tasks") || "[]"),
+      doneTasks: JSON.parse(localStorage.getItem("doneTasks") || "[]"),
+      inputValue: "",
+      index: 0,
+    };
   }
- 
+
   async updateData(value: number) {
     await this.setState({ index: value });
     this.setState({
       doneTasks: [...this.state.doneTasks, this.state.tasks[this.state.index]],
-    }); 
+    });
     this.state.tasks.splice(this.state.index, 1);
-    this.forceUpdate();     
- }
+    localStorage.setItem("tasks", JSON.stringify(this.state.tasks));
+    localStorage.setItem("doneTasks", JSON.stringify(this.state.doneTasks));
+    this.forceUpdate();
+  }
 
- async updateData2(value: number) {
-  await this.setState({ index: value });
-  this.state.tasks.splice(this.state.index, 1);
-  this.forceUpdate();     
-}
+  async updateData2(value: number) {
+    await this.setState({ index: value });
+    this.state.tasks.splice(this.state.index, 1);
+    localStorage.setItem("tasks", JSON.stringify(this.state.tasks));
+    this.forceUpdate();
+  }
 
-async updateData3(value: number) {
-  await this.setState({ index: value });
-  this.state.doneTasks.splice(this.state.index, 1);
-  this.forceUpdate();     
-}
+  async updateData3(value: number) {
+    await this.setState({ index: value });
+    this.state.doneTasks.splice(this.state.index, 1);
+    localStorage.setItem("doneTasks", JSON.stringify(this.state.doneTasks));
+    this.forceUpdate();
+  }
 
   handleChange(e: any) {
     this.setState({
@@ -54,14 +62,29 @@ async updateData3(value: number) {
 
   async AddTask() {
     if (this.state.inputValue !== "") {
-    await this.setState({
-      tasks: [...this.state.tasks, this.state.inputValue],
-    });
-  }
+      await this.setState({
+        tasks: [...this.state.tasks, this.state.inputValue],
+      });
+      localStorage.setItem("tasks", JSON.stringify(this.state.tasks));
+    }
 
     this.setState({
       inputValue: "",
     });
+  }
+  async handleKeyDown(e: any) {
+    if (e.key === "Enter") {
+      if (this.state.inputValue !== "") {
+        await this.setState({
+          tasks: [...this.state.tasks, this.state.inputValue],
+        });
+        localStorage.setItem("tasks", JSON.stringify(this.state.tasks));
+      }
+
+      this.setState({
+        inputValue: "",
+      });
+    }
   }
 
   render() {
@@ -70,7 +93,13 @@ async updateData3(value: number) {
         <div className="main__tasks">
           <div className="main__todo">
             Tasks to do:
-            <Cards text={this.state.tasks} updateData={this.updateData} updateData2={this.updateData2} btn={"mark as completed"} btn2={"remove task"}/>
+            <Cards
+              text={this.state.tasks}
+              updateData={this.updateData}
+              updateData2={this.updateData2}
+              btn={"mark as completed"}
+              btn2={"remove task"}
+            />
             <form>
               <div className="input-field col s6">
                 <input
@@ -78,24 +107,31 @@ async updateData3(value: number) {
                   id="addTask"
                   type="text"
                   className="validate"
-                  value={this.state.inputValue} 
+                  value={this.state.inputValue}
                   onChange={this.handleChange}
-                /> <br/>
+                  onKeyDown={this.handleKeyDown}
+                />{" "}
+                <br />
                 <input
                   type="button"
                   value={"Add new task"}
                   className="waves-effect waves-light btn #b39ddb deep-purple lighten-3"
                   onClick={this.AddTask}
+                  
                 />
               </div>
             </form>
           </div>
           <div className="main__finished">
             Completed tasks:
-            <DoneCards text={this.state.doneTasks} btn={"done"} updateData3={this.updateData3}/>
+            <DoneCards
+              text={this.state.doneTasks}
+              btn={"done"}
+              updateData3={this.updateData3}
+            />
           </div>
         </div>
       </div>
     );
   }
-} 
+}
