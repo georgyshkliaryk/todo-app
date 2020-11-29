@@ -13,13 +13,14 @@ interface IMainState {
   themeMain: React.CSSProperties;
   themeTitle: React.CSSProperties;
   themeCard: React.CSSProperties;
+  themeInput: React.CSSProperties;
 }
 
 export class Main extends Component<any, {}> {
   state: IMainState = {
     tasks: [],
     doneTasks: [],
-    inputValue: "", 
+    inputValue: "",
     index: 0,
     checked: false,
     themeMain: {
@@ -27,9 +28,12 @@ export class Main extends Component<any, {}> {
     } as React.CSSProperties,
     themeTitle: {
       color: "black",
-    } as React.CSSProperties, 
+    } as React.CSSProperties,
     themeCard: {
       backgroundColor: "white",
+    } as React.CSSProperties,
+    themeInput: {
+      color: "black",
     } as React.CSSProperties,
   };
 
@@ -58,13 +62,16 @@ export class Main extends Component<any, {}> {
       themeCard: {
         backgroundColor: "white",
       } as React.CSSProperties,
+      themeInput: {
+        color: "black",
+      } as React.CSSProperties,
     };
   }
 
-  async componentDidMount() { 
+  async componentDidMount() {
     if (this.state.checked) {
-      this.setState({ 
-        checked: JSON.parse(localStorage.getItem("checked") || "false"), 
+      this.setState({
+        checked: JSON.parse(localStorage.getItem("checked") || "false"),
         themeMain: {
           backgroundColor: "#121212",
         },
@@ -73,6 +80,9 @@ export class Main extends Component<any, {}> {
         },
         themeCard: {
           backgroundColor: "#242424",
+        },
+        themeInput: {
+          color: "white",
         },
       });
     }
@@ -137,7 +147,6 @@ export class Main extends Component<any, {}> {
 
   async handleThemeChange(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.checked) {
-      
       await this.setState({
         checked: true,
         themeMain: {
@@ -148,6 +157,9 @@ export class Main extends Component<any, {}> {
         },
         themeCard: {
           backgroundColor: "#242424",
+        },
+        themeInput: {
+          color: "white",
         },
       });
     } else {
@@ -162,7 +174,10 @@ export class Main extends Component<any, {}> {
         themeCard: {
           backgroundColor: "white",
         },
-      });   
+        themeInput: {
+          color: "black",
+        },
+      });
     }
     localStorage.setItem("checked", JSON.stringify(this.state.checked));
   }
@@ -173,7 +188,11 @@ export class Main extends Component<any, {}> {
         <div className="switch red1">
           <label>
             Light
-            <input type="checkbox" onChange={this.handleThemeChange} checked={this.state.checked}/>
+            <input
+              type="checkbox"
+              onChange={this.handleThemeChange}
+              checked={this.state.checked}
+            />
             <span className="lever"></span>
             Dark
           </label>
@@ -196,6 +215,7 @@ export class Main extends Component<any, {}> {
                   id="addTask"
                   type="text"
                   className="validate"
+                  style={this.state.themeInput}
                   value={this.state.inputValue}
                   onChange={this.handleInputChange}
                   onKeyDown={this.handleKeyDown}

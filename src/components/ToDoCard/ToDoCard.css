@@ -13,6 +13,7 @@
 
 @media (max-width: 35rem) {
     .card {
-        width: 25rem;
-    }
+        width: 25rem !important;
+        margin: auto;
+    } 
 }

@@ -2,7 +2,8 @@
     font-size: 25px;
     min-height: 80vh;
     margin: auto;
-    padding: 3rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -44,6 +45,10 @@
 @media (max-width: 35rem) {
     .main__todo, .main__finished {
         min-width: 0;
+        text-align: center;
+    }
+    .main__finished {
+        margin-top: 1rem;
     }
 }
  
