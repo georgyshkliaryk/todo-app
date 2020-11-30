@@ -6,7 +6,7 @@ class Nav extends React.Component<any, {}> {
     return (
       <div>
         <nav>
-          <div className="nav-wrapper #b39ddb white lighten-3">
+          <div className="nav-wrapper #b39ddb deep-purple lighten-3">
             <div className="container">
               <a href="/" className="brand-logo center">
                 ToDoApp
